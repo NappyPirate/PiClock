@@ -9,6 +9,7 @@ with 12 pins that are properly connected to the GPIO pins
 the BCM pins on the raspberry pi should be connected to the display like so:
 
 | GPIO  | display pin |
+| ----- | ----------- |
 |  7    |     d1      |
 |  8    |     d2      |
 |  3    |   	d3      |
