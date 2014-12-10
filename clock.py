@@ -9,7 +9,7 @@ import signal
 #this class is designed to represent and control 
 #a 4 digit 7 segment display with 12 pins
 #specifically one with id# sma420564
-class sevenSegmentDisplay:
+class SevenSegmentDisplay:
 	#digit displays and the BCM pin numbers they map to 
 	d1 = 7
 	d2 = 8
@@ -58,8 +58,8 @@ class sevenSegmentDisplay:
 		GPIO.setup(self.d4, GPIO.OUT)
 
 	#blanks out the current digits then turns off all digits
-	def resetScreen(self):
-		self.setDigitCharacter("null", False)
+	def reset_screen(self):
+		self.set_digit_character("null", False)
 		GPIO.output(self.d1, True)
 		GPIO.output(self.d2, True)
 		GPIO.output(self.d3, True)
@@ -68,7 +68,7 @@ class sevenSegmentDisplay:
 	#turns on the segments needed to display a character
 	#takes a 7 bit list representation for the character
 	#and a bool to determine if decimal/colon should be on
-	def setDigitCharacter(self, char, decimal):
+	def set_digit_character(self, char, decimal):
 		bits = self.characters[char]
 		for i in range(len(bits)):
 			GPIO.output(self.segments[i], bool(bits[i]))
@@ -76,7 +76,7 @@ class sevenSegmentDisplay:
 		GPIO.output(self.segments[7], decimal)
 
 	#grounds a specific digit, making it active
-	def setDigitActive(self, digitPin):
+	def set_digit_active(self, digitPin):
 		GPIO.output(digitPin, False)
 
 
@@ -90,27 +90,27 @@ signal.signal(signal.SIGTERM, signal_term_handler)
 
 
 try:
-	display = sevenSegmentDisplay()
+	display = SevenSegmentDisplay()
 
 	#loop that displays a 12 hour clock on the 4 digit display
 	while True:
 		currentTime = time.strftime("%I%M")
 
-		display.resetScreen()
-		display.setDigitActive(display.d1)
-		display.setDigitCharacter(currentTime[0], False)
+		display.reset_screen()
+		display.set_digit_active(display.d1)
+		display.set_digit_character(currentTime[0], False)
 
-		display.resetScreen()
-		display.setDigitActive(display.d2)
-		display.setDigitCharacter(currentTime[1], True)
+		display.reset_screen()
+		display.set_digit_active(display.d2)
+		display.set_digit_character(currentTime[1], True)
 
-		display.resetScreen()
-		display.setDigitActive(display.d3)
-		display.setDigitCharacter(currentTime[2], False)
+		display.reset_screen()
+		display.set_digit_active(display.d3)
+		display.set_digit_character(currentTime[2], False)
 
-		display.resetScreen()
-		display.setDigitActive(display.d4)
-		display.setDigitCharacter(currentTime[3], False)
+		display.reset_screen()
+		display.set_digit_active(display.d4)
+		display.set_digit_character(currentTime[3], False)
 
 except KeyboardInterrupt:
 	GPIO.cleanup()
